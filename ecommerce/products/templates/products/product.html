@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} - Cloud Store{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row g-4">
+
+            <div class="col-md-5">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}"
+                        class="img-fluid rounded"
+                        alt="{{ product.name }}">
+                {% endif %}
+            </div>
+
+            <div class="col-md-7">
+                <h2>{{ product.name }}</h2>
+                <p class="fs-4 fw-semibold text-dark">
+                    ₹{{ product.price }}
+                </p>
+
+                {% if product.description %}
+                    <p class="text-muted">
+                        {{ product.description }}
+                    </p>
+                {% endif %}
+
+                <button class="btn btn-dark mt-3" disabled>
+                    Add to Cart
+                </button>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -23,7 +23,7 @@
                                 ₹{{ product.price }}
                             </p>
 
-                            <a href="#" class="btn btn-sm btn-dark mt-auto w-100">
+                            <a href="{% url 'product_detail' product.slug %}" class="btn btn-sm btn-dark mt-auto w-100">
                                 View Product
                             </a>
                         </div>
