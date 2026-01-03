@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">Your Cart</h2>
+
+    {% if cart_items %}
+        {% for item in cart_items %}
+            <div class="card mb-3">
+                <div class="row g-0 align-items-center">
+
+                    <!-- Product Image -->
+                    <div class="col-md-3">
+                        {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}"
+                                 class="img-fluid rounded-start"
+                                 alt="{{ item.product.name }}">
+                        {% endif %}
+                    </div>
+
+                    <!-- Product Details -->
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ item.product.name }}
+                            </h5>
+
+                            {% if item.product.description %}
+                                <p class="card-text text-muted small mb-2">
+                                    {{ item.product.description|truncatewords:18 }}
+                                </p>
+                            {% endif %}
+
+                            <p class="card-text text-muted mb-1">
+                                Price: ₹{{ item.product.price }}
+                            </p>
+
+                            <p class="card-text fw-semibold">
+                                Subtotal: ₹{{ item.total_price }}
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <!-- Quantity + Actions -->
+                    <div class="col-md-3">
+                        <div class="card-body">
+
+                            <!-- UPDATE QUANTITY -->
+                            <form method="post"
+                                  action="{% url 'cart_update' item.product.id %}"
+                                  class="d-flex mb-2">
+                                {% csrf_token %}
+
+                                <input type="number"
+                                       name="quantity"
+                                       value="{{ item.quantity }}"
+                                       min="1"
+                                       class="form-control form-control-sm me-2"
+                                       style="max-width: 70px;">
+
+                                <button type="submit"
+                                        class="btn btn-sm btn-outline-dark">
+                                    Update
+                                </button>
+                            </form>
+
+                            <!-- REMOVE -->
+                            <a href="{% url 'cart_remove' item.product.id %}"
+                               class="btn btn-sm btn-danger w-100">
+                                Remove
+                            </a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+
+        <!-- CART TOTAL -->
+        <div class="d-flex justify-content-end mt-4">
+            <h4>Total: ₹{{ total }}</h4>
+        </div>
+
+    {% else %}
+        <p class="text-muted">Your cart is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -26,9 +26,16 @@
                     </p>
                 {% endif %}
 
-                <button class="btn btn-dark mt-3" disabled>
-                    Add to Cart
-                </button>
+                <!-- ADD TO CART FORM -->
+                <form method="post" action="{% url 'cart_add' product.id %}">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="quantity" value="1">
+
+                    <button type="submit" class="btn btn-dark mt-3">
+                        Add to Cart
+                    </button>
+                </form>
             </div>
 
         </div>
