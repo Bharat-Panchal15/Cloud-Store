@@ -4,15 +4,17 @@
 
 {% block content %}
 <div class="text-center my-5">
-    <h1>Welcome to Cloud Store</h1>
-    <p class="lead">Browse our products and start shopping!</p>
+    <section>
+        <h1>Welcome to Cloud Store</h1>
+        <p class="lead">Browse our products and start shopping!</p>
+    </section>
 
-    <div class="container my-5">
+    <section class="container my-5">
         <h2 class="mb-4 text-center">Products</h2>
 
         <div class="row">
             {% for product in products %}
-                <div class="col-6 col-md-3 col-lg-2 mb-4">
+                <article class="col-6 col-md-3 col-lg-2 mb-4">
                     <div class="card h-100">
                         {% if product.image %}
                             <img src="{{ product.image.url }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="{{ product.name }}">
@@ -28,11 +30,11 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </article>
             {% empty %}
                 <p class="text-center text-muted">No products available.</p>
             {% endfor %}
         </div>
-    </div>
+    </section>
 </div>
 {% endblock %}

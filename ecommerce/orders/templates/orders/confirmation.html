@@ -3,55 +3,55 @@
 {% block title %}Order Confirmation{% endblock %}
 
 {% block content %}
-<div class="container my-5">
+    <section class="container my-5">
 
-    <div class="alert alert-success">
-        <h4 class="alert-heading">Order Placed Successfully 🎉</h4>
-        <p>Your order has been placed and is currently <strong>{{ order.status }}</strong>.</p>
-    </div>
+        <header class="alert alert-success">
+            <h4 class="alert-heading">Order Placed Successfully 🎉</h4>
+            <p>Your order has been placed and is currently <strong>{{ order.status }}</strong>.</p>
+        </header>
 
-    <h5 class="mb-3">Order #{{ order.public_id }}</h5>
-    <p class="text-muted">
-        Placed on {{ order.created_at|date:"M d, Y H:i" }}
-    </p>
+        <h5 class="mb-3">Order #{{ order.public_id }}</h5>
+        <p class="text-muted">
+            Placed on {{ order.created_at|date:"M d, Y H:i" }}
+        </p>
 
-    <hr>
+        <hr>
 
-    {% for item in order.items.all %}
-        <div class="row mb-3 align-items-center">
+        {% for item in order.items.all %}
+            <section class="row mb-3 align-items-center">
 
-            {% if item.product.image %}
-                <img src="{{ item.product.image.url }}"
-                    alt="{{ item.product.name }}"
-                    class="img-fluid rounded"
-                    style="max-width: 80px;">
-            {% endif %}
+                {% if item.product.image %}
+                    <img src="{{ item.product.image.url }}"
+                        alt="{{ item.product.name }}"
+                        class="img-fluid rounded"
+                        style="max-width: 80px;">
+                {% endif %}
 
-            <div class="col-md-8">
-                <strong>{{ item.product.name }}</strong><br>
-                <span class="text-muted">
-                    {{ item.quantity }} × ₹{{ item.price_at_purchase }}
-                </span>
-            </div>
+                <div class="col-md-8">
+                    <strong>{{ item.product.name }}</strong><br>
+                    <span class="text-muted">
+                        {{ item.quantity }} × ₹{{ item.price_at_purchase }}
+                    </span>
+                </div>
 
-            <div class="col-md-4 text-end">
-                ₹{{ item.subtotal }}
-            </div>
+                <div class="col-md-4 text-end">
+                    ₹{{ item.subtotal }}
+                </div>
 
+            </section>
+        {% endfor %}
+
+        <hr>
+
+        <footer class="d-flex justify-content-end">
+            <h4>Total: ₹{{ order.total_amount }}</h4>
+        </footer>
+
+        <div class="mt-4">
+            <a href="{% url 'home' %}" class="btn btn-outline-dark">
+                Continue Shopping
+            </a>
         </div>
-    {% endfor %}
 
-    <hr>
-
-    <div class="d-flex justify-content-end">
-        <h4>Total: ₹{{ order.total_amount }}</h4>
-    </div>
-
-    <div class="mt-4">
-        <a href="{% url 'home' %}" class="btn btn-outline-dark">
-            Continue Shopping
-        </a>
-    </div>
-
-</div>
+    </section>
 {% endblock %}

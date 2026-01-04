@@ -3,42 +3,42 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="container mt-5" style="max-width: 400px;">
-    <section class="mb-4">
-        <h3 class="mb-3 text-center">Login</h3>
-    </section>
+    <div class="container mt-5" style="max-width: 400px;">
+        <section class="mb-4">
+            <h3 class="mb-3 text-center">Login</h3>
+        </section>
 
-    <section class="mb-4">
-        <form method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control" required>
-            </div>
-            
-            <div class="mb-3">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" required>
-            </div>
-            
-            <button class="btn btn-dark w-100">Login</button>
-        </form>
-    </section>
+        <section class="mb-4">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                
+                <button class="btn btn-dark w-100">Login</button>
+            </form>
+        </section>
 
-    <section class="mb-4">
-        {% for message in messages %}
-            <div class="alert alert-danger">{{ message }}</div>
-        {% endfor %}
-    </section>
+        <section class="mb-4">
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+            {% endfor %}
+        </section>
 
-    <section class="text-center mb-5">
-        <p class="mb-0">
-            Don't have an account?
-            <a href="{% url 'signup' %}" class="text-dark fw-semibold">
-                Sign Up
-            </a>
-        </p>
-    </section>
+        <section class="text-center mb-5">
+            <p class="mb-0">
+                Don't have an account?
+                <a href="{% url 'signup' %}" class="text-dark fw-semibold">
+                    Sign Up
+                </a>
+            </p>
+        </section>
 
-</div>
+    </div>
 {% endblock %}

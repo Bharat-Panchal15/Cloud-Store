@@ -134,6 +134,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Redirect user to login page if not authenticated
+LOGIN_URL = 'login'  # points to your login view name
+LOGIN_REDIRECT_URL = 'home'  # after login, go to home
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/

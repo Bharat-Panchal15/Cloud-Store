@@ -3,59 +3,65 @@
 {% block title %}Order #{{ order.id }} - Cloud Store{% endblock %}
 
 {% block content %}
-<div class="container my-5">
+    <section class="container my-5">
 
-    <h2>Order #{{ order.public_id }}</h2>
-    <p>Status: <strong>{{ order.status }}</strong></p>
-    <p>Placed on: {{ order.created_at|date:"M d, Y H:i" }}</p>
+        <header>
+            <h2>Order #{{ order.public_id }}</h2>
+            <p>Status: <strong>{{ order.status }}</strong></p>
+            <p>Placed on: {{ order.created_at|date:"M d, Y H:i" }}</p>
+        </header>
 
-    <hr>
+        <hr>
 
-    {% for item in items %}
-    <div class="card mb-3">
-        <div class="row g-0 align-items-center">
-
-            <!-- Product Image -->
-            <div class="col-md-3">
-                {% if item.product.image %}
-                    <img src="{{ item.product.image.url }}"
-                         class="img-fluid rounded-start"
-                         alt="{{ item.product.name }}">
-                {% endif %}
-            </div>
-
-            <!-- Product Details -->
-            <div class="col-md-6">
-                <div class="card-body">
-                    <h5 class="card-title">{{ item.product.name }}</h5>
-
-                    {% if item.product.description %}
-                        <p class="card-text text-muted small mb-2">
-                            {{ item.product.description|truncatewords:18 }}
-                        </p>
-                    {% endif %}
-
-                    <p class="card-text text-muted mb-1">
-                        Price: ₹{{ item.price_at_purchase }}
-                    </p>
-
-                    <p class="card-text fw-semibold">
-                        Quantity: {{ item.quantity }} | Subtotal: ₹{{ item.subtotal }}
-                    </p>
-
+        <section>
+            {% for item in items %}
+            <article class="card mb-3">
+                <div class="row g-0 align-items-center">
+    
+                    <!-- Product Image -->
+                    <div class="col-md-3">
+                        {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}"
+                                class="img-fluid rounded-start"
+                                alt="{{ item.product.name }}">
+                        {% endif %}
+                    </div>
+    
+                    <!-- Product Details -->
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.product.name }}</h5>
+    
+                            {% if item.product.description %}
+                                <p class="card-text text-muted small mb-2">
+                                    {{ item.product.description|truncatewords:18 }}
+                                </p>
+                            {% endif %}
+    
+                            <p class="card-text text-muted mb-1">
+                                Price: ₹{{ item.price_at_purchase }}
+                            </p>
+    
+                            <p class="card-text fw-semibold">
+                                Quantity: {{ item.quantity }} | Subtotal: ₹{{ item.subtotal }}
+                            </p>
+    
+                        </div>
+                    </div>
                 </div>
+            </article>
+            {% endfor %}
+        </section>
+
+        <footer>
+            <div class="d-flex justify-content-end mt-3">
+                <h4>Total Amount: ₹{{ order.total_amount }}</h4>
             </div>
-        </div>
-    </div>
-    {% endfor %}
+    
+            <a href="{% url 'order_list' %}" class="btn btn-outline-dark mt-3">
+                Back to Orders
+            </a>
+        </footer>
 
-    <div class="d-flex justify-content-end mt-3">
-        <h4>Total Amount: ₹{{ order.total_amount }}</h4>
-    </div>
-
-    <a href="{% url 'order_list' %}" class="btn btn-outline-dark mt-3">
-        Back to Orders
-    </a>
-
-</div>
+    </section>
 {% endblock %}
