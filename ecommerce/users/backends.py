@@ -4,15 +4,15 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class EmailBackend(ModelBackend):
-    def authenticate(self, request, useranme=None, email=None, password=None, **kwargs):
+    def authenticate(self, request, username=None, email=None, password=None, **kwargs):
         if password is None:
             return None
 
         try:
             if email:
                 user = User.objects.get(email=email)
-            elif useranme:
-                user = User.objects.get(username=useranme)
+            elif username:
+                user = User.objects.get(username=username)
             else:
                 return None
             
