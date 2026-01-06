@@ -4,6 +4,9 @@ from django.views.decorators.http import require_POST
 from django.contrib import messages
 from orders.services import create_order_from_cart
 from orders.models import Order
+import logging
+
+order_view_logger = logging.getLogger('ecommerce.orders.views')
 
 # Create your views here.
 
@@ -13,6 +16,7 @@ def order_list_view(request):
     Display a list of orders for the logged-in user.
     """
     orders = Order.objects.filter(user=request.user).only('id', 'total_amount', 'status', 'created_at')
+    order_view_logger.debug("Order list viewed", extra={"user_id": request.user.id, "orders_count": orders.count()})
 
     return render(request, 'orders/list.html', {'orders': orders})
 
@@ -22,6 +26,7 @@ def order_detail_view(request, order_id):
     Display details of a specific order.
     """
     order = get_object_or_404(Order, id=order_id, user=request.user)
+    order_view_logger.debug("Order detail viewed", extra={"user_id": request.user.id, "order_id": order.id})
     items_list = order.items.select_related('product').all()
 
     items = []
@@ -56,6 +61,8 @@ def checkout_view(request):
     
     except ValueError:
         messages.error(request, "Your cart is empty. Please add items to your cart before checking out.")
+        order_view_logger.warning("Checkout failed: empty cart", extra={"user_id": request.user.id})
         return redirect('cart_detail')
+    order_view_logger.info("Checkout successful", extra={"user_id": request.user.id, "order_id": order.id})
     return redirect('order_confirmation', order_id=order.id)
 

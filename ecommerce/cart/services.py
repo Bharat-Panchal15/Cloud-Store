@@ -1,4 +1,8 @@
 from products.models import Product
+import logging
+
+cart_logger = logging.getLogger("ecommerce.cart")
+cart_service_logger = logging.getLogger("ecommerce.cart.services")
 
 CART_SESSION_KEY = "cart"
 
@@ -21,8 +25,11 @@ def add_to_cart(request, product_id, quantity=1):
 
     if product_id in cart:
         cart[product_id]["quantity"] += quantity
+        cart_service_logger.info("Cart item quantity updated", extra={"product_id": product_id, "quantity": cart[product_id]["quantity"]})
+
     else:
         cart[product_id] = {"quantity": quantity}
+        cart_service_logger.info("Product added to cart", extra={"product_id": product_id, "quantity": quantity})
 
     request.session.modified = True
 
@@ -32,6 +39,7 @@ def remove_from_cart(request, product_id):
 
     if product_id in cart:
         del cart[product_id]
+        cart_service_logger.info("Product removed from cart", extra={"product_id": product_id})
         request.session.modified = True
 
 def update_cart_quantity(request, product_id, quantity):
@@ -41,8 +49,10 @@ def update_cart_quantity(request, product_id, quantity):
     if product_id in cart:
         if quantity <= 0:
             del cart[product_id]
+            cart_service_logger.info("Product removed from cart due to zero quantity", extra={"product_id": product_id})
         else:
             cart[product_id]["quantity"] = quantity
+            cart_service_logger.info("Cart item quantity updated", extra={"product_id": product_id, "quantity": quantity})
 
         request.session.modified = True
 
